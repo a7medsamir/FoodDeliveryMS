@@ -10,10 +10,12 @@
         <link href="~/lib/font-awesome/css/brands.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/site.css" />
-    </environment>   
+        <script src="~/lib/jquery/jquery.js"></script>
+    </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
+        <script src="~/lib/jquery/jquery.min.js"></script>
     </environment>
 </head>
 <body>
@@ -45,7 +47,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container body-content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -56,11 +58,16 @@
             &copy; 2020 - FoodDelivery - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -3,12 +3,19 @@
 @{
     ViewData["Title"] = Model.Message;
 }
+
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" id="success-alert">@TempData["Message"]</div>
+}
+
 <h1>Restaurants</h1>
 <form method="get">
     <div class="form-group">
         <div class="input-group">
-            <input type="search" class="form-control" 
-                   asp-for="SearchTerm"/>
+            <input type="search" class="form-control"
+                   asp-for="SearchTerm" />
             <div class="input-group-append">
                 <button class="btn btn-secondary">
                     <i class="fas fa-search"></i>
@@ -18,47 +25,81 @@
     </div>
 </form>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Address
-            </th>
-            <th>
-                Cuisine
-            </th>
-            <th>
-
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var restaurant in Model.Restaurants)
-        {
+<form method="post">
+    <table class="table">
+        <thead>
             <tr>
-                <td>@restaurant.Name</td>
-                <td>@restaurant.Address</td>
-                <td>@restaurant.Cuisine</td>
-                <td>
-                    <a asp-page="./Detail" 
-                       asp-route-restaurantId="@restaurant.Id">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                        Details
-                    </a>
-                </td>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Cuisine
+                </th>
+                <th>
+
+                </th>
             </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+            @if (Model.Restaurants != null && Model.Restaurants.Count() > 0)
+            {
+                @foreach (var restaurant in Model.Restaurants)
+                {
+                    <tr>
+                        <td>@restaurant.Name</td>
+                        <td>@restaurant.Address</td>
+                        <td>@restaurant.Cuisine</td>
+                        <td>
+                            <a asp-page="./Detail"
+                               asp-route-restaurantId="@restaurant.Id">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                Details
+                            </a>
+                            <a asp-page="./Edit"
+                               asp-route-restaurantId="@restaurant.Id">
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                                Edit
+                            </a>
+                            <button class="btn btn-danger btn-sm"
+                                    asp-page-handler="Delete"
+                                    onclick="return confirm('Are you sure you want to delete?')"
+                                    asp-route-restaurantId="@restaurant.Id">
+                                Delete
+                            </button>
+
+
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">No Data Found</td>                    
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</form>
+
+<a asp-page="./Edit" class="btn btn-primary">Add New</a>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+            $("#success-alert").slideUp(500);
+        });
+    });
+</script>

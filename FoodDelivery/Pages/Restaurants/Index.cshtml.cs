@@ -6,6 +6,7 @@ using FoodDelivery.Data;
 using FoodDelivery.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.Extensions.Configuration;
 
 namespace FoodDelivery.Pages.Restaurants
@@ -23,11 +24,19 @@ namespace FoodDelivery.Pages.Restaurants
             this.config = config;
             this.restaurantData = restaurantData;
         }
+     
         public void OnGet()
         {
             Restaurants = restaurantData.GetRestaurantByName(SearchTerm);
             Message = config["Message"];
-
+        }
+        public IActionResult OnPostDelete(Guid restaurantId)
+        {
+            var result= restaurantData.DeleteRestaurant(restaurantId);
+            restaurantData.Commit();
+            Restaurants = restaurantData.GetRestaurantByName(SearchTerm);
+            TempData["Message"] = "Restaurant Deleted Successfully!";
+            return RedirectToPage("./Index");
         }
     }
 }
