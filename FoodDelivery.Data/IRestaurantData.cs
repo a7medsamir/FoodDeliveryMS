@@ -14,5 +14,6 @@ namespace FoodDelivery.Data
         int Commit();
         Restaurant AddRestaurant(Restaurant restaurant);
         Restaurant DeleteRestaurant(Guid restaurantId);
+        int GetCountOfRestaurants();
     }
 }

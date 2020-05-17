@@ -1,7 +1,7 @@
 ﻿@page
 @model FoodDelivery.Pages.Restaurants.IndexModel
 @{
-    ViewData["Title"] = Model.Message;
+    ViewData["Title"] = "Restaurants";
 }
 
 
@@ -25,74 +25,23 @@
     </div>
 </form>
 
-<form method="post">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                <th>
-                    Address
-                </th>
-                <th>
-                    Cuisine
-                </th>
-                <th>
 
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Restaurants != null && Model.Restaurants.Count() > 0)
-            {
-                @foreach (var restaurant in Model.Restaurants)
-                {
-                    <tr>
-                        <td>@restaurant.Name</td>
-                        <td>@restaurant.Address</td>
-                        <td>@restaurant.Cuisine</td>
-                        <td>
-                            <a asp-page="./Detail"
-                               asp-route-restaurantId="@restaurant.Id">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                Details
-                            </a>
-                            <a asp-page="./Edit"
-                               asp-route-restaurantId="@restaurant.Id">
-                                <i class="fa fa-edit" aria-hidden="true"></i>
-                                Edit
-                            </a>
-                            <button class="btn btn-danger btn-sm"
-                                    asp-page-handler="Delete"
-                                    onclick="return confirm('Are you sure you want to delete?')"
-                                    asp-route-restaurantId="@restaurant.Id">
-                                Delete
-                            </button>
+@if (Model.Restaurants != null && Model.Restaurants.Count() > 0)
+{
 
+        @foreach (var restaurant in Model.Restaurants)
+        {
 
+            <partial name="_RestaurantDataSummary" model="restaurant" />
 
-                        </td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="4">No Data Found</td>                    
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tfoot>
-    </table>
-</form>
+        }
+ 
+}
+else
+{
+    <div>No Data Found</div>
+}
+
 
 <a asp-page="./Edit" class="btn btn-primary">Add New</a>
 
@@ -103,3 +52,10 @@
         });
     });
 </script>
+
+
+@section footer {
+
+    <div>@Model.Message</div>
+
+}

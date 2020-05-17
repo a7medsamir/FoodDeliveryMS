@@ -35,6 +35,11 @@ namespace FoodDelivery.Data
             return restaurantToRemove;
         }
 
+        public int GetCountOfRestaurants()
+        {
+            return db.Restaurants.Count();
+        }
+
         public Restaurant GetRestaurantById(Guid restaurantId)
         {
             return db.Restaurants.Find(restaurantId);

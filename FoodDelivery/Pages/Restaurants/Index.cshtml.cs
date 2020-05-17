@@ -30,13 +30,6 @@ namespace FoodDelivery.Pages.Restaurants
             Restaurants = restaurantData.GetRestaurantByName(SearchTerm);
             Message = config["Message"];
         }
-        public IActionResult OnPostDelete(Guid restaurantId)
-        {
-            var result= restaurantData.DeleteRestaurant(restaurantId);
-            restaurantData.Commit();
-            Restaurants = restaurantData.GetRestaurantByName(SearchTerm);
-            TempData["Message"] = "Restaurant Deleted Successfully!";
-            return RedirectToPage("./Index");
-        }
+       
     }
 }

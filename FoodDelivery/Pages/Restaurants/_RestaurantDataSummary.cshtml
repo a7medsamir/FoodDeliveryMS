@@ -1,0 +1,37 @@
+﻿@using FoodDelivery.Entities
+@model Restaurant
+
+
+    <div class="card" style="width: 20rem;">
+        <div class="card-header">
+            <h4>@Model.Name</h4>
+        </div>
+
+        <div class="card-body">
+        
+
+            <p class="card-text">
+                <span>Address: @Model.Address</span>
+                <span>Cuisine: @Model.Cuisine</span>
+            </p>
+
+            <a asp-page="./Detail"
+               asp-route-restaurantId="@Model.Id"
+               class="card-link">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                Details
+            </a>
+            <a asp-page="./Edit"
+               asp-route-restaurantId="@Model.Id"
+               class="card-link">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+                Edit
+            </a>
+            <a class="card-link"
+               asp-page="./Delete"
+               asp-route-restaurantId="@Model.Id">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                Delete
+            </a>
+        </div>
+    </div>
